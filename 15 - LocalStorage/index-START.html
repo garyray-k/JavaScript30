@@ -66,24 +66,30 @@
       const index = element.dataset.index;
       items[index].done = !items[index].done;
       localStorage.setItem('items', JSON.stringify(items));
-      populateList(item, itemsList);
+      populateList(items, itemsList);
     }
     
-  function clearAll(listToBeCleared) {
-    console.log('clicked');
-    listToBeCleared.innerHTML = `<li>Add tapas...</li>`;
-    localStorage.setItem(items, []);
+  function clearAll(event) {
+    console.log('clicked clearall');
+    itemsList.innerHTML = `<li>Add tapas...</li>`;
+    localStorage.removeItem('items');
+    items.length = 0;
   }
 
   function uncheckAll(itemsToBeUnchecked) {
-
+    console.log('uncheck all clicked');
+    items.forEach(item => {
+      item.done = false;
+    });
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
   }
     
   addItems.addEventListener('submit', addItem);
   itemsList.addEventListener('click', toggleDone);
   populateList(items, itemsList);
-  clearAllButton.addEventListener('click', clearAll(itemsList));
-  uncheckAllButton.addEventListener('click', uncheckAll(items));
+  clearAllButton.addEventListener('click', clearAll);
+  uncheckAllButton.addEventListener('click', uncheckAll);
 
 </script>
 
