@@ -42,7 +42,20 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
 
+  function logText(event) {
+    console.log(this.classList.value);
+    // event.stopPropagation(); // don't have event fire on parent elements
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, { 
+    capture: false,
+    once: true })); // capture stops the "bubbling" up after going down the element stack
+  // i.e. <one><two><three></three></two></one>
+  // if capture is true it will handle the event as it goes down the children: one, two, three
+  // if capture is false, it will handle events after it goes down the children on the way back up: three, two, one
+  // once allows the event ot fire only once, and then it removes the listener from the element
 </script>
 </body>
 </html>
